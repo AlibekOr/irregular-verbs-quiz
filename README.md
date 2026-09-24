@@ -1,71 +1,54 @@
-# Getting Started with Create React App
+# Irregular Verbs Quiz
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Ingliz tilidagi **noto'g'ri fe'llarni (irregular verbs)** o'rganish uchun web ilova.
+Har bir fe'l uchala shakli bilan ko'rsatiladi — **V1, V2, V3** — va har bir shaklning
+o'zbekcha tarjimasi hamda misol gaplar bilan tushuntiriladi:
 
-## Available Scripts
+| V1 | V2 | V3 |
+|----|----|----|
+| buy — sotib olmoq | bought — sotib oldi | bought — sotib olingan |
 
-In the project directory, you can run:
+## Imkoniyatlar
 
-### `npm start`
+- **📖 O'rganish** — V1/V2/V3 nima ekanligi va qachon ishlatilishi haqida qoidalar,
+  100 ta eng ko'p ishlatiladigan fe'l ro'yxati, qidiruv va guruhlar bo'yicha filtr
+  (AAA: cut–cut–cut, ABB: buy–bought–bought, ABA: come–came–come, ABC: go–went–gone).
+- **🔁 Kartochkalar** — fe'lni ko'rib, shakllarini eslang, keyin kartani ochib tekshiring.
+- **🎯 Quiz** — 3 xil mashq:
+  - *Variantli test* — V2 yoki V3 ni 4 ta variantdan tanlash;
+  - *Yozish* — V2 va V3 ni o'zingiz yozasiz;
+  - *Tarjima* — o'zbekcha ma'nosi bo'yicha inglizcha fe'lni topish.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+  Har bir javobdan keyin to'liq tushuntirish chiqadi: uchala shakl, tarjimalar,
+  V2 va V3 bilan misol gaplar. Xato topilgan fe'l quiz oxirida yana bir bor so'raladi.
+- **📊 Natijalar** — o'rganilgan va qiyin fe'llar; «Xatolarim» rejimida faqat xato qilingan
+  fe'llarni mashq qilish mumkin. Natijalar brauzerda saqlanadi.
+- 🔊 Har bir so'zning talaffuzini eshitish, telefon uchun moslashgan dizayn, tungi rejim.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Ishga tushirish
 
-### `npm test`
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm test         # testlar
+npm run build    # dist/ papkasiga tayyor sayt
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Internetga joylash (GitHub Pages)
 
-### `npm run build`
+`.github/workflows/deploy.yml` `main` branchiga push qilinganda saytni avtomatik joylaydi.
+Buning uchun repo sozlamalarida **Settings → Pages → Source: GitHub Actions** ni tanlang.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Yangi fe'l qo'shish
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Barcha fe'llar `src/data/verbs.ts` faylida. Yangi qator qo'shing:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```ts
+['buy', 'bought', 'bought', 'sotib olmoq', 'sotib oldi', 'sotib olingan',
+ 'I bought a new car.', 'Men yangi mashina sotib oldim.',
+ 'I have bought the tickets.', 'Men chiptalarni sotib olganman.'],
+```
 
-### `npm run eject`
+Bir nechta to'g'ri shakl bo'lsa, `/` bilan ajrating: `'learnt/learned'`.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# react-test
+Texnologiyalar: React 19, TypeScript, Vite, Vitest.

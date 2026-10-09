@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { Flashcards } from './components/Flashcards'
+import { Guide } from './components/Guide'
 import { Learn } from './components/Learn'
 import { Quiz } from './components/Quiz'
 
 const tabs = [
-  { id: 'learn', icon: '📖', label: "O'rganish" },
+  { id: 'guide', icon: '📘', label: 'Qoidalar' },
+  { id: 'learn', icon: '📖', label: "Fe'llar" },
   { id: 'cards', icon: '🔁', label: 'Kartochkalar' },
   { id: 'quiz', icon: '🎯', label: 'Quiz' },
 ] as const
@@ -12,7 +14,7 @@ const tabs = [
 type Tab = (typeof tabs)[number]['id']
 
 export default function App() {
-  const [tab, setTab] = useState<Tab>('learn')
+  const [tab, setTab] = useState<Tab>('guide')
 
   return (
     <div className="app">
@@ -28,13 +30,21 @@ export default function App() {
 
       <nav className="tabs">
         {tabs.map((t) => (
-          <button key={t.id} className={`tab ${tab === t.id ? 'on' : ''}`} onClick={() => setTab(t.id)}>
+          <button
+            key={t.id}
+            className={`tab ${tab === t.id ? 'on' : ''}`}
+            onClick={() => {
+              setTab(t.id)
+              window.scrollTo({ top: 0 })
+            }}
+          >
             <span>{t.icon}</span> {t.label}
           </button>
         ))}
       </nav>
 
       <main>
+        {tab === 'guide' && <Guide />}
         {tab === 'learn' && <Learn />}
         {tab === 'cards' && <Flashcards />}
         {tab === 'quiz' && <Quiz />}

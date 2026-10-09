@@ -228,8 +228,8 @@ p {
   margin-top: 12px;
 }
 
-.rule-grid.four {
-  grid-template-columns: repeat(4, 1fr);
+.rule-grid.two {
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .rule {
@@ -245,6 +245,130 @@ p {
 
 .rule p {
   font-size: 0.9rem;
+}
+
+/* Guide page */
+.guide p {
+  line-height: 1.6;
+}
+
+.guide h3 {
+  margin: 18px 0 6px;
+  font-size: 1rem;
+}
+
+.formula-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  align-items: baseline;
+  background: var(--accent-soft);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin: 8px 0 12px;
+}
+
+.formula-box .en {
+  font-weight: 700;
+}
+
+.note {
+  background: var(--soft);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.note.warn {
+  border-left-color: var(--v2);
+}
+
+.ex-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+  display: grid;
+  gap: 8px;
+}
+
+.ex-list li {
+  display: flex;
+  flex-direction: column;
+  padding-left: 12px;
+  border-left: 3px solid var(--border);
+}
+
+.cheat {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.cheat-row {
+  display: grid;
+  grid-template-columns: 2fr 0.6fr 1.2fr;
+  gap: 8px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+  align-items: center;
+}
+
+.cheat-row.head {
+  border-top: 0;
+  background: var(--soft);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.group-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+}
+
+.group-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.mistake-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.mistake-item {
+  background: var(--soft);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.mistake-item p {
+  margin: 0 0 4px;
+}
+
+.mistake-item .wrong {
+  color: var(--bad);
+  text-decoration: line-through;
+}
+
+.mistake-item .right {
+  color: var(--good);
+  font-weight: 600;
+}
+
+.tips {
+  padding-left: 20px;
+  line-height: 1.6;
+}
+
+.tips li + li {
+  margin-top: 6px;
 }
 
 /* Buttons & chips */
@@ -746,7 +870,8 @@ button.verb-row:hover,
   }
 
   .rule-grid,
-  .rule-grid.four,
+  .rule-grid.two,
+  .mistake-list,
   .mode-grid,
   .forms {
     grid-template-columns: 1fr;
@@ -762,6 +887,12 @@ button.verb-row:hover,
 
   .verb-row {
     grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .cheat-row {
+    grid-template-columns: 1.6fr 0.5fr 1fr;
+    font-size: 0.85rem;
+    padding: 8px 10px;
   }
 
   .hide-sm {

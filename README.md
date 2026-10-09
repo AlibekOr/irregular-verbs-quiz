@@ -10,9 +10,11 @@ o'zbekcha tarjimasi hamda misol gaplar bilan tushuntiriladi:
 
 ## Imkoniyatlar
 
-- **📖 O'rganish** — V1/V2/V3 nima ekanligi va qachon ishlatilishi haqida qoidalar,
-  100 ta eng ko'p ishlatiladigan fe'l ro'yxati, qidiruv va guruhlar bo'yicha filtr
-  (AAA: cut–cut–cut, ABB: buy–bought–bought, ABA: come–came–come, ABC: go–went–gone).
+- **📘 Qoidalar** — sodda tilda tushuntirish: noto'g'ri fe'l nima, V1/V2/V3 qachon ishlatiladi,
+  inkor va so'roq gaplar, «V1, V2 yoki V3?» jadvali, yodlash uchun 4 guruh
+  (AAA: cut–cut–cut, ABB: buy–bought–bought, ABA: come–came–come, ABC: go–went–gone),
+  ko'p uchraydigan xatolar va yodlash bo'yicha maslahatlar.
+- **📖 Fe'llar** — 100 ta eng ko'p ishlatiladigan fe'l ro'yxati, qidiruv va guruhlar bo'yicha filtr.
 - **🔁 Kartochkalar** — fe'lni ko'rib, shakllarini eslang, keyin kartani ochib tekshiring.
 - **🎯 Quiz** — 3 xil mashq:
   - *Variantli test* — V2 yoki V3 ni 4 ta variantdan tanlash;

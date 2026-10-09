@@ -62,7 +62,7 @@ const tips = [
   "Uchala shaklni ritm bilan, ovoz chiqarib ayting: «buy – bought – bought». Quloq ham eslab qoladi — 🔊 tugmasidan foydalaning.",
   'Avval eng oson guruhdan boshlang (AAA), keyin ABB, ABA va oxirida ABC.',
   "Har bir fe'l bilan o'zingiz haqingizda bitta gap tuzing: «Yesterday I ate plov».",
-  "Kartochkalar bilan takrorlang, keyin Quizdagi «Yozish» mashqi bilan o'zingizni tekshiring.",
+  "Kartochkalar bilan takrorlang, keyin Quizdagi «Yozish» va «Ikkitasini yoz» mashqlari bilan o'zingizni tekshiring.",
   "Xato qilgan fe'llaringizni daftarga yozib, ertasi kuni yana takrorlang.",
 ]
 

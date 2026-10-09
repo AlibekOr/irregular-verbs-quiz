@@ -1,11 +1,29 @@
 import { useEffect, useRef, useState } from 'react'
 import { verbs, type Verb } from '../data/verbs'
-import { groupInfo, groupOf, isCorrect, makeQuestions, retryOf, type Group, type Question, type QuizMode } from '../lib/quiz'
+import {
+  formsToWrite,
+  groupInfo,
+  groupOf,
+  isCorrect,
+  isWrittenCorrect,
+  makeQuestions,
+  retryOf,
+  type Form,
+  type Group,
+  type Question,
+  type QuizMode,
+} from '../lib/quiz'
 import { VerbCard } from './VerbCard'
 
 const modes: { id: QuizMode; icon: string; title: string; text: string }[] = [
   { id: 'choice', icon: '🅰️', title: 'Variantli test', text: "V1 berilgan — to'g'ri V2 yoki V3 ni 4 ta variantdan tanlang." },
   { id: 'write', icon: '⌨️', title: 'Yozish', text: "V1 berilgan — V2 va V3 ni o'zingiz yozing. Eng foydali mashq!" },
+  {
+    id: 'two',
+    icon: '🎲',
+    title: 'Ikkitasini yoz',
+    text: "V1, V2 yoki V3 dan bittasi tasodifiy beriladi — qolgan ikkitasini o'zingiz yozasiz.",
+  },
   { id: 'translate', icon: '🌐', title: 'Tarjima', text: "O'zbekcha tarjima berilgan — inglizcha fe'lni toping." },
 ]
 
@@ -165,6 +183,10 @@ export function Quiz() {
   )
 }
 
+const uzOf = { v1: 'uz1', v2: 'uz2', v3: 'uz3' } as const
+
+const placeholders: Record<Form, string> = { v1: 'asosiy shakl', v2: "o'tgan zamon", v3: 'sifatdosh' }
+
 interface QuestionProps {
   question: Question
   answered: Answer | null
@@ -173,9 +195,8 @@ interface QuestionProps {
 }
 
 function QuestionView({ question, answered, onAnswer, onNext }: QuestionProps) {
-  const { verb, mode, asked, options } = question
-  const [v2, setV2] = useState('')
-  const [v3, setV3] = useState('')
+  const { verb, mode, asked, given, options } = question
+  const [written, setWritten] = useState<Record<Form, string>>({ v1: '', v2: '', v3: '' })
   const firstInput = useRef<HTMLInputElement>(null)
   const nextBtn = useRef<HTMLButtonElement>(null)
 
@@ -205,6 +226,17 @@ function QuestionView({ question, answered, onAnswer, onNext }: QuestionProps) {
         <p className="muted">{verb.uz1}</p>
       </>
     )
+  } else if (mode === 'two') {
+    prompt = (
+      <>
+        <p className="q-hint">
+          <span className={`tag tag-${given}`}>{given.toUpperCase()}</span> shakli berilgan — qolgan ikkitasini
+          yozing
+        </p>
+        <p className="q-word">{verb[given].split('/').join(' / ')}</p>
+        <p className="muted">{verb[uzOf[given]]}</p>
+      </>
+    )
   } else {
     prompt = (
       <>
@@ -215,16 +247,19 @@ function QuestionView({ question, answered, onAnswer, onNext }: QuestionProps) {
     )
   }
 
+  const toWrite = formsToWrite(question)
+  const nothingWritten = toWrite.every((f) => !written[f].trim())
+
   const submitWrite = () => {
-    if (answered || (!v2.trim() && !v3.trim())) return
-    onAnswer(isCorrect(v2, verb.v2) && isCorrect(v3, verb.v3), `${v2.trim() || '—'} – ${v3.trim() || '—'}`)
+    if (answered || nothingWritten) return
+    onAnswer(isWrittenCorrect(question, written), toWrite.map((f) => written[f].trim() || '—').join(' – '))
   }
 
   return (
     <div className="question">
       {prompt}
 
-      {mode === 'write' ? (
+      {mode === 'write' || mode === 'two' ? (
         <form
           className="write"
           onSubmit={(e) => {
@@ -232,28 +267,28 @@ function QuestionView({ question, answered, onAnswer, onNext }: QuestionProps) {
             submitWrite()
           }}
         >
-          {(['v2', 'v3'] as const).map((k) => {
-            const value = k === 'v2' ? v2 : v3
+          {toWrite.map((k, i) => {
+            const value = written[k]
             const state = answered ? (isCorrect(value, verb[k]) ? 'good' : 'bad') : ''
             return (
               <label key={k} className={`field ${state}`}>
                 <span className={`tag tag-${k}`}>{k.toUpperCase()}</span>
                 <input
-                  ref={k === 'v2' ? firstInput : undefined}
+                  ref={i === 0 ? firstInput : undefined}
                   value={value}
-                  onChange={(e) => (k === 'v2' ? setV2 : setV3)(e.target.value)}
+                  onChange={(e) => setWritten((w) => ({ ...w, [k]: e.target.value }))}
                   disabled={!!answered}
                   autoComplete="off"
                   autoCapitalize="off"
                   spellCheck={false}
-                  placeholder={k === 'v2' ? "o'tgan zamon" : 'sifatdosh'}
+                  placeholder={placeholders[k]}
                 />
                 {answered && state === 'bad' && <span className="fix">✓ {verb[k]}</span>}
               </label>
             )
           })}
           {!answered && (
-            <button className="btn primary" type="submit" disabled={!v2.trim() && !v3.trim()}>
+            <button className="btn primary" type="submit" disabled={nothingWritten}>
               Tekshirish
             </button>
           )}
@@ -280,7 +315,10 @@ function QuestionView({ question, answered, onAnswer, onNext }: QuestionProps) {
           <p className="formula">
             <b>{verb.v1}</b> – <b>{verb.v2}</b> – <b>{verb.v3}</b>
           </p>
-          <VerbCard verb={verb} highlight={mode === 'choice' ? asked : mode === 'translate' ? 'v1' : undefined} />
+          <VerbCard
+            verb={verb}
+            highlight={mode === 'choice' ? asked : mode === 'translate' ? 'v1' : mode === 'two' ? given : undefined}
+          />
           <button ref={nextBtn} className="btn primary" onClick={onNext}>
             Keyingi savol →
           </button>

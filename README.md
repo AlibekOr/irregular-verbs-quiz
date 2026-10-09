@@ -16,9 +16,10 @@ o'zbekcha tarjimasi hamda misol gaplar bilan tushuntiriladi:
   ko'p uchraydigan xatolar va yodlash bo'yicha maslahatlar.
 - **📖 Fe'llar** — 100 ta eng ko'p ishlatiladigan fe'l ro'yxati, qidiruv va guruhlar bo'yicha filtr.
 - **🔁 Kartochkalar** — fe'lni ko'rib, shakllarini eslang, keyin kartani ochib tekshiring.
-- **🎯 Quiz** — 3 xil mashq:
+- **🎯 Quiz** — 4 xil mashq:
   - *Variantli test* — V2 yoki V3 ni 4 ta variantdan tanlash;
   - *Yozish* — V2 va V3 ni o'zingiz yozasiz;
+  - *Ikkitasini yoz* — V1, V2 yoki V3 dan biri tasodifiy beriladi, qolgan ikkitasini yozasiz;
   - *Tarjima* — o'zbekcha ma'nosi bo'yicha inglizcha fe'lni topish.
 
   Har bir javobdan keyin to'liq tushuntirish chiqadi: uchala shakl, tarjimalar,

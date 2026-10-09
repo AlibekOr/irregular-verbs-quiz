@@ -75,14 +75,19 @@ export function regularize(v1: string): string {
   return v1 + 'ed'
 }
 
-export type QuizMode = 'choice' | 'write' | 'translate'
+export type QuizMode = 'choice' | 'write' | 'two' | 'translate'
 export type AskedForm = 'v2' | 'v3'
+export type Form = 'v1' | 'v2' | 'v3'
+
+export const forms: readonly Form[] = ['v1', 'v2', 'v3']
 
 export interface Question {
   verb: Verb
   mode: QuizMode
   /** Which form a "choice" question asks for */
   asked: AskedForm
+  /** The form shown in "write" and "two" questions; the learner writes the other two */
+  given: Form
   /** Options for "choice" and "translate" questions */
   options: string[]
   /** Set when a wrongly answered question is asked again at the end */
@@ -129,13 +134,14 @@ export function makeQuestions(
     .slice(0, count)
     .map((verb) => {
       const asked: AskedForm = rand() < 0.5 ? 'v2' : 'v3'
+      const given: Form = mode === 'two' ? forms[Math.floor(rand() * forms.length)] : 'v1'
       const options =
         mode === 'choice'
           ? choiceOptions(verb, asked, pool, rand)
           : mode === 'translate'
             ? translateOptions(verb, pool, rand)
             : []
-      return { verb, mode, asked, options }
+      return { verb, mode, asked, given, options }
     })
 }
 
@@ -146,4 +152,14 @@ export function retryOf(q: Question, rand: () => number = Math.random): Question
     options = shuffle(q.options, rand)
   }
   return { ...q, options, retry: true }
+}
+
+/** The forms the learner has to write: every form except the one shown. */
+export function formsToWrite(q: Question): Form[] {
+  return forms.filter((f) => f !== q.given)
+}
+
+/** True when every form the learner had to write is correct. */
+export function isWrittenCorrect(q: Question, written: Partial<Record<Form, string>>): boolean {
+  return formsToWrite(q).every((f) => isCorrect(written[f] ?? '', q.verb[f]))
 }

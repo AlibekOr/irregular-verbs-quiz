@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { verbs } from '../data/verbs'
-import { groupOf, isCorrect, makeQuestions, regularize, retryOf } from './quiz'
+import { formsToWrite, groupOf, isCorrect, makeQuestions, regularize, retryOf, isWrittenCorrect, type Question } from './quiz'
 
 const find = (v1: string) => verbs.find((v) => v.v1 === v1)!
 
@@ -83,5 +83,48 @@ describe('retryOf', () => {
   it('leaves write questions without options alone', () => {
     const [q] = makeQuestions(verbs, 'write', 1, verbs)
     expect(retryOf(q).options).toEqual([])
+  })
+})
+
+describe('"two" mode', () => {
+  const ask = (v1: string, given: Question['given']): Question => ({
+    verb: find(v1),
+    mode: 'two',
+    asked: 'v2',
+    given,
+    options: [],
+  })
+
+  it('shows a random form and asks for the other two', () => {
+    const shown = new Set<string>()
+    for (const q of makeQuestions(verbs, 'two', verbs.length, verbs)) {
+      shown.add(q.given)
+      expect(formsToWrite(q)).toHaveLength(2)
+      expect(formsToWrite(q)).not.toContain(q.given)
+    }
+    expect([...shown].sort()).toEqual(['v1', 'v2', 'v3'])
+  })
+
+  it('always shows V1 in the classic write mode', () => {
+    for (const q of makeQuestions(verbs, 'write', 20, verbs)) expect(q.given).toBe('v1')
+  })
+
+  it('accepts only the right pair of forms', () => {
+    const q = ask('go', 'v2')
+    expect(isWrittenCorrect(q, { v1: 'go', v3: 'gone' })).toBe(true)
+    expect(isWrittenCorrect(q, { v1: ' Go ', v3: 'GONE' })).toBe(true)
+    expect(isWrittenCorrect(q, { v1: 'go', v3: 'went' })).toBe(false)
+    expect(isWrittenCorrect(q, { v1: 'go' })).toBe(false)
+  })
+
+  it('checks the forms of the asked verb even when the shown word is shared ("lay")', () => {
+    expect(isWrittenCorrect(ask('lie', 'v2'), { v1: 'lie', v3: 'lain' })).toBe(true)
+    expect(isWrittenCorrect(ask('lay', 'v1'), { v2: 'laid', v3: 'laid' })).toBe(true)
+    expect(isWrittenCorrect(ask('lay', 'v1'), { v2: 'lay', v3: 'lain' })).toBe(false)
+  })
+
+  it('accepts any spelling variant of the written forms', () => {
+    expect(isWrittenCorrect(ask('be', 'v3'), { v1: 'be', v2: 'were' })).toBe(true)
+    expect(isWrittenCorrect(ask('learn', 'v1'), { v2: 'learned', v3: 'learnt' })).toBe(true)
   })
 })

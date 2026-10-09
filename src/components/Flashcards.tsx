@@ -3,19 +3,15 @@ import { verbs } from '../data/verbs'
 import { shuffle } from '../lib/quiz'
 import { Speak, VerbCard } from './VerbCard'
 
-interface Props {
-  onAnswer: (v1: string, ok: boolean) => void
-}
-
-export function Flashcards({ onAnswer }: Props) {
+// Self-assessment here is not saved to progress: only checked quiz answers count as "learned".
+export function Flashcards() {
   const [deck, setDeck] = useState(() => shuffle(verbs))
   const [i, setI] = useState(0)
   const [flipped, setFlipped] = useState(false)
   const [known, setKnown] = useState(0)
 
-  const verb = deck[i % deck.length]
+  const verb = deck[i]
   const next = (ok: boolean) => {
-    onAnswer(verb.v1, ok)
     if (ok) setKnown((k) => k + 1)
     setFlipped(false)
     if (i + 1 >= deck.length) {
@@ -35,7 +31,8 @@ export function Flashcards({ onAnswer }: Props) {
         </span>
       </div>
       <p className="muted">
-        Fe'lni ko'ring, V2 va V3 ni ichingizda ayting, keyin kartani ochib o'zingizni tekshiring.
+        Fe'lni ko'ring, V2 va V3 ni ichingizda ayting, keyin kartani ochib o'zingizni tekshiring. Bu yerdagi
+        baholar natijalarga yozilmaydi — o'rganilgan fe'llar faqat Quiz orqali hisoblanadi.
       </p>
 
       {!flipped ? (

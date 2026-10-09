@@ -12,8 +12,8 @@ export function Stats({ progress, onReset }: Props) {
     .filter((v) => isWeak(progress[v.v1]))
     .sort((a, b) => progress[b.v1].wrong - progress[a.v1].wrong)
   const seen = verbs.filter((v) => progress[v.v1])
-  const totals = Object.values(progress).reduce(
-    (t, s) => ({ right: t.right + s.right, wrong: t.wrong + s.wrong }),
+  const totals = seen.reduce(
+    (t, v) => ({ right: t.right + progress[v.v1].right, wrong: t.wrong + progress[v.v1].wrong }),
     { right: 0, wrong: 0 },
   )
   const pct = Math.round((learned.length / verbs.length) * 100)

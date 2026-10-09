@@ -7,10 +7,28 @@ export type Progress = Record<string, VerbStat>
 
 const KEY = 'irregular-verbs-progress'
 
+const isCount = (n: unknown): n is number => typeof n === 'number' && Number.isInteger(n) && n >= 0
+
+/** Parses stored progress, dropping anything that isn't a valid { right, wrong } entry. */
+export function parseProgress(raw: string | null): Progress {
+  if (!raw) return {}
+  let data: unknown
+  try {
+    data = JSON.parse(raw)
+  } catch {
+    return {}
+  }
+  if (typeof data !== 'object' || data === null || Array.isArray(data)) return {}
+  const out: Progress = {}
+  for (const [v1, s] of Object.entries(data as Record<string, Partial<Record<keyof VerbStat, unknown>> | null>)) {
+    if (s && isCount(s.right) && isCount(s.wrong)) out[v1] = { right: s.right, wrong: s.wrong }
+  }
+  return out
+}
+
 export function loadProgress(): Progress {
   try {
-    const raw = localStorage.getItem(KEY)
-    return raw ? (JSON.parse(raw) as Progress) : {}
+    return parseProgress(localStorage.getItem(KEY))
   } catch {
     return {}
   }
@@ -36,13 +54,4 @@ export function isLearned(s: VerbStat | undefined): boolean {
 
 export function isWeak(s: VerbStat | undefined): boolean {
   return !!s && s.wrong > 0 && s.wrong >= s.right
-}
-
-export function speak(text: string): void {
-  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return
-  window.speechSynthesis.cancel()
-  const u = new SpeechSynthesisUtterance(text.replace(/\//g, ', '))
-  u.lang = 'en-US'
-  u.rate = 0.85
-  window.speechSynthesis.speak(u)
 }

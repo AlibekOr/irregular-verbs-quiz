@@ -1,6 +1,6 @@
 import type { Verb } from '../data/verbs'
 import { groupInfo, groupOf } from '../lib/quiz'
-import { speak } from '../lib/progress'
+import { speak } from '../lib/speech'
 
 interface Props {
   verb: Verb

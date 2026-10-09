@@ -95,8 +95,8 @@ export function Learn({ progress }: { progress: Progress }) {
           </div>
         </div>
 
-        <div className="verb-table" role="table">
-          <div className="verb-row head" role="row">
+        <div className="verb-table">
+          <div className="verb-row head" aria-hidden="true">
             <span>V1</span>
             <span>V2</span>
             <span>V3</span>
@@ -107,10 +107,10 @@ export function Learn({ progress }: { progress: Progress }) {
             const isOpen = open === v.v1
             return (
               <div key={v.v1} className={`verb-item ${isOpen ? 'open' : ''}`}>
-                <button className="verb-row" role="row" onClick={() => setOpen(isOpen ? null : v.v1)} aria-expanded={isOpen}>
+                <button type="button" className="verb-row" onClick={() => setOpen(isOpen ? null : v.v1)} aria-expanded={isOpen}>
                   <span className="v1">
-                    {isLearned(s) && <span className="dot ok" title="O'rganilgan" />}
-                    {isWeak(s) && <span className="dot bad" title="Xato qilingan" />}
+                    {isLearned(s) && <span className="dot ok" role="img" aria-label="O'rganilgan" title="O'rganilgan" />}
+                    {isWeak(s) && <span className="dot bad" role="img" aria-label="Xato qilingan" title="Xato qilingan" />}
                     {v.v1}
                   </span>
                   <span>{v.v2}</span>

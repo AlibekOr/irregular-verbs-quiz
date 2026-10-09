@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { verbs } from '../data/verbs'
-import { groupOf, isCorrect, makeQuestions, regularize } from './quiz'
+import { groupOf, isCorrect, makeQuestions, regularize, retryOf } from './quiz'
 
 const find = (v1: string) => verbs.find((v) => v.v1 === v1)!
 
@@ -66,5 +66,22 @@ describe('makeQuestions', () => {
 
   it('has no duplicate verbs in the data', () => {
     expect(new Set(verbs.map((v) => v.v1)).size).toBe(verbs.length)
+  })
+})
+
+describe('retryOf', () => {
+  it('marks the question as a retry and reorders its options', () => {
+    for (const q of makeQuestions(verbs, 'choice', 30, verbs)) {
+      const r = retryOf(q)
+      expect(r.retry).toBe(true)
+      expect(r.verb).toBe(q.verb)
+      expect([...r.options].sort()).toEqual([...q.options].sort())
+      expect(r.options).not.toEqual(q.options)
+    }
+  })
+
+  it('leaves write questions without options alone', () => {
+    const [q] = makeQuestions(verbs, 'write', 1, verbs)
+    expect(retryOf(q).options).toEqual([])
   })
 })

@@ -49,7 +49,7 @@ export default function App() {
 
       <main>
         {tab === 'learn' && <Learn progress={progress} />}
-        {tab === 'cards' && <Flashcards onAnswer={onAnswer} />}
+        {tab === 'cards' && <Flashcards />}
         {tab === 'quiz' && <Quiz progress={progress} onAnswer={onAnswer} />}
         {tab === 'stats' && <Stats progress={progress} onReset={() => setProgress({})} />}
       </main>

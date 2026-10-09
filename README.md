@@ -14,6 +14,7 @@ o'zbekcha tarjimasi hamda misol gaplar bilan tushuntiriladi:
   100 ta eng ko'p ishlatiladigan fe'l ro'yxati, qidiruv va guruhlar bo'yicha filtr
   (AAA: cut–cut–cut, ABB: buy–bought–bought, ABA: come–came–come, ABC: go–went–gone).
 - **🔁 Kartochkalar** — fe'lni ko'rib, shakllarini eslang, keyin kartani ochib tekshiring.
+  Bu yerdagi o'z-o'zini baholash natijalarga yozilmaydi.
 - **🎯 Quiz** — 3 xil mashq:
   - *Variantli test* — V2 yoki V3 ni 4 ta variantdan tanlash;
   - *Yozish* — V2 va V3 ni o'zingiz yozasiz;

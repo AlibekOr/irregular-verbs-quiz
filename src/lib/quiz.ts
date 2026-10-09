@@ -138,3 +138,12 @@ export function makeQuestions(
       return { verb, mode, asked, options }
     })
 }
+
+/** A wrongly answered question asked again, with its options in a new order so position can't be memorised. */
+export function retryOf(q: Question, rand: () => number = Math.random): Question {
+  let options = q.options
+  for (let i = 0; i < 5 && options.length > 1 && options.every((o, j) => o === q.options[j]); i++) {
+    options = shuffle(q.options, rand)
+  }
+  return { ...q, options, retry: true }
+}

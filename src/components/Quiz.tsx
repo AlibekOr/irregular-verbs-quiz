@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { verbs, type Verb } from '../data/verbs'
-import { groupInfo, groupOf, isCorrect, makeQuestions, type Group, type Question, type QuizMode } from '../lib/quiz'
+import { groupInfo, groupOf, isCorrect, makeQuestions, retryOf, type Group, type Question, type QuizMode } from '../lib/quiz'
 import { isWeak, type Progress } from '../lib/progress'
 import { VerbCard } from './VerbCard'
 
@@ -146,7 +146,7 @@ export function Quiz({ progress, onAnswer }: Props) {
     setAnswers((a) => [...a, { question, ok, given }])
     if (!question.retry) onAnswer(question.verb.v1, ok)
     // A wrong answer comes back once more at the end of the quiz
-    if (!ok && !question.retry) setQueue((q) => [...q!, { ...question, retry: true }])
+    if (!ok && !question.retry) setQueue((q) => [...q!, retryOf(question)])
   }
   const answered = answers.length > index ? answers[index] : null
   const firstTotal = queue.filter((q) => !q.retry).length

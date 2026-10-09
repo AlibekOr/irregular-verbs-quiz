@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { verbs, type Verb } from '../data/verbs'
 import { groupInfo, groupOf, isCorrect, makeQuestions, retryOf, type Group, type Question, type QuizMode } from '../lib/quiz'
-import { isWeak, type Progress } from '../lib/progress'
 import { VerbCard } from './VerbCard'
 
 const modes: { id: QuizMode; icon: string; title: string; text: string }[] = [
@@ -10,7 +9,7 @@ const modes: { id: QuizMode; icon: string; title: string; text: string }[] = [
   { id: 'translate', icon: '🌐', title: 'Tarjima', text: "O'zbekcha tarjima berilgan — inglizcha fe'lni toping." },
 ]
 
-type Scope = 'all' | 'weak' | Group
+type Scope = 'all' | Group
 
 interface Answer {
   question: Question
@@ -18,12 +17,7 @@ interface Answer {
   given: string
 }
 
-interface Props {
-  progress: Progress
-  onAnswer: (v1: string, ok: boolean) => void
-}
-
-export function Quiz({ progress, onAnswer }: Props) {
+export function Quiz() {
   const [mode, setMode] = useState<QuizMode>('write')
   const [count, setCount] = useState(10)
   const [scope, setScope] = useState<Scope>('all')
@@ -31,9 +25,7 @@ export function Quiz({ progress, onAnswer }: Props) {
   const [index, setIndex] = useState(0)
   const [answers, setAnswers] = useState<Answer[]>([])
 
-  const weakVerbs = verbs.filter((v) => isWeak(progress[v.v1]))
-  const pick = (s: Scope): Verb[] =>
-    s === 'all' ? verbs : s === 'weak' ? weakVerbs : verbs.filter((v) => groupOf(v) === s)
+  const pick = (s: Scope): Verb[] => (s === 'all' ? verbs : verbs.filter((v) => groupOf(v) === s))
 
   const start = (selected: Verb[], m = mode) => {
     if (selected.length === 0) return
@@ -62,13 +54,6 @@ export function Quiz({ progress, onAnswer }: Props) {
         <div className="chips">
           <button className={`chip ${scope === 'all' ? 'on' : ''}`} onClick={() => setScope('all')}>
             Hammasi ({verbs.length})
-          </button>
-          <button
-            className={`chip ${scope === 'weak' ? 'on' : ''}`}
-            onClick={() => setScope('weak')}
-            disabled={weakVerbs.length === 0}
-          >
-            Xatolarim ({weakVerbs.length})
           </button>
           {(Object.keys(groupInfo) as Group[]).map((g) => (
             <button key={g} className={`chip ${scope === g ? 'on' : ''}`} onClick={() => setScope(g)} title={groupInfo[g].title}>
@@ -144,7 +129,6 @@ export function Quiz({ progress, onAnswer }: Props) {
   const question = queue[index]
   const handleAnswer = (ok: boolean, given: string) => {
     setAnswers((a) => [...a, { question, ok, given }])
-    if (!question.retry) onAnswer(question.verb.v1, ok)
     // A wrong answer comes back once more at the end of the quiz
     if (!ok && !question.retry) setQueue((q) => [...q!, retryOf(question)])
   }

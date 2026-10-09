@@ -14,7 +14,6 @@ o'zbekcha tarjimasi hamda misol gaplar bilan tushuntiriladi:
   100 ta eng ko'p ishlatiladigan fe'l ro'yxati, qidiruv va guruhlar bo'yicha filtr
   (AAA: cut–cut–cut, ABB: buy–bought–bought, ABA: come–came–come, ABC: go–went–gone).
 - **🔁 Kartochkalar** — fe'lni ko'rib, shakllarini eslang, keyin kartani ochib tekshiring.
-  Bu yerdagi o'z-o'zini baholash natijalarga yozilmaydi.
 - **🎯 Quiz** — 3 xil mashq:
   - *Variantli test* — V2 yoki V3 ni 4 ta variantdan tanlash;
   - *Yozish* — V2 va V3 ni o'zingiz yozasiz;
@@ -22,8 +21,7 @@ o'zbekcha tarjimasi hamda misol gaplar bilan tushuntiriladi:
 
   Har bir javobdan keyin to'liq tushuntirish chiqadi: uchala shakl, tarjimalar,
   V2 va V3 bilan misol gaplar. Xato topilgan fe'l quiz oxirida yana bir bor so'raladi.
-- **📊 Natijalar** — o'rganilgan va qiyin fe'llar; «Xatolarim» rejimida faqat xato qilingan
-  fe'llarni mashq qilish mumkin. Natijalar brauzerda saqlanadi.
+- Ilova hech qanday natija yoki shaxsiy ma'lumot saqlamaydi.
 - 🔊 Har bir so'zning talaffuzini eshitish, telefon uchun moslashgan dizayn, tungi rejim.
 
 ## Ishga tushirish

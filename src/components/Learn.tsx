@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react'
 import { verbs } from '../data/verbs'
 import { groupInfo, groupOf, type Group } from '../lib/quiz'
-import { isLearned, isWeak, type Progress } from '../lib/progress'
 import { Speak, VerbCard } from './VerbCard'
 
 const groups = Object.keys(groupInfo) as Group[]
@@ -57,7 +56,7 @@ export function Rules() {
   )
 }
 
-export function Learn({ progress }: { progress: Progress }) {
+export function Learn() {
   const [query, setQuery] = useState('')
   const [group, setGroup] = useState<Group | 'all'>('all')
   const [open, setOpen] = useState<string | null>(null)
@@ -103,16 +102,11 @@ export function Learn({ progress }: { progress: Progress }) {
             <span className="hide-sm">Tarjima</span>
           </div>
           {list.map((v) => {
-            const s = progress[v.v1]
             const isOpen = open === v.v1
             return (
               <div key={v.v1} className={`verb-item ${isOpen ? 'open' : ''}`}>
                 <button type="button" className="verb-row" onClick={() => setOpen(isOpen ? null : v.v1)} aria-expanded={isOpen}>
-                  <span className="v1">
-                    {isLearned(s) && <span className="dot ok" role="img" aria-label="O'rganilgan" title="O'rganilgan" />}
-                    {isWeak(s) && <span className="dot bad" role="img" aria-label="Xato qilingan" title="Xato qilingan" />}
-                    {v.v1}
-                  </span>
+                  <span className="v1">{v.v1}</span>
                   <span>{v.v2}</span>
                   <span>{v.v3}</span>
                   <span className="muted hide-sm">{v.uz1}</span>

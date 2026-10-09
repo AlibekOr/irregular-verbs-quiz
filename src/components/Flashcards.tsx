@@ -3,7 +3,6 @@ import { verbs } from '../data/verbs'
 import { shuffle } from '../lib/quiz'
 import { Speak, VerbCard } from './VerbCard'
 
-// Self-assessment here is not saved to progress: only checked quiz answers count as "learned".
 export function Flashcards() {
   const [deck, setDeck] = useState(() => shuffle(verbs))
   const [i, setI] = useState(0)
@@ -31,8 +30,7 @@ export function Flashcards() {
         </span>
       </div>
       <p className="muted">
-        Fe'lni ko'ring, V2 va V3 ni ichingizda ayting, keyin kartani ochib o'zingizni tekshiring. Bu yerdagi
-        baholar natijalarga yozilmaydi — o'rganilgan fe'llar faqat Quiz orqali hisoblanadi.
+        Fe'lni ko'ring, V2 va V3 ni ichingizda ayting, keyin kartani ochib o'zingizni tekshiring.
       </p>
 
       {!flipped ? (

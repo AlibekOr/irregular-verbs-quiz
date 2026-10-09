@@ -19,7 +19,7 @@ o'zbekcha tarjimasi hamda misol gaplar bilan tushuntiriladi:
 - **🎯 Quiz** — 4 xil mashq:
   - *Variantli test* — V2 yoki V3 ni 4 ta variantdan tanlash;
   - *Yozish* — V2 va V3 ni o'zingiz yozasiz;
-  - *Ikkitasini yoz* — V1, V2 yoki V3 dan biri tasodifiy beriladi, qolgan ikkitasini yozasiz;
+  - *Ikkitasini yoz* — V2 yoki V3 tasodifiy beriladi, V1 va qolgan shaklni yozasiz;
   - *Tarjima* — o'zbekcha ma'nosi bo'yicha inglizcha fe'lni topish.
 
   Har bir javobdan keyin to'liq tushuntirish chiqadi: uchala shakl, tarjimalar,

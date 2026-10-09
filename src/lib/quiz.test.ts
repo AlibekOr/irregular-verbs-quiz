@@ -95,14 +95,14 @@ describe('"two" mode', () => {
     options: [],
   })
 
-  it('shows a random form and asks for the other two', () => {
+  it('shows V2 or V3 at random (never V1) and asks for the other two', () => {
     const shown = new Set<string>()
     for (const q of makeQuestions(verbs, 'two', verbs.length, verbs)) {
       shown.add(q.given)
       expect(formsToWrite(q)).toHaveLength(2)
       expect(formsToWrite(q)).not.toContain(q.given)
     }
-    expect([...shown].sort()).toEqual(['v1', 'v2', 'v3'])
+    expect([...shown].sort()).toEqual(['v2', 'v3'])
   })
 
   it('always shows V1 in the classic write mode', () => {

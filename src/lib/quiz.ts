@@ -86,7 +86,7 @@ export interface Question {
   mode: QuizMode
   /** Which form a "choice" question asks for */
   asked: AskedForm
-  /** The form shown in "write" and "two" questions; the learner writes the other two */
+  /** The form shown in "write" (always V1) and "two" (V2 or V3) questions; the learner writes the other two */
   given: Form
   /** Options for "choice" and "translate" questions */
   options: string[]
@@ -134,7 +134,8 @@ export function makeQuestions(
     .slice(0, count)
     .map((verb) => {
       const asked: AskedForm = rand() < 0.5 ? 'v2' : 'v3'
-      const given: Form = mode === 'two' ? forms[Math.floor(rand() * forms.length)] : 'v1'
+      // "two" never shows V1 — that would be the same as the "write" mode
+      const given: Form = mode === 'two' ? (rand() < 0.5 ? 'v2' : 'v3') : 'v1'
       const options =
         mode === 'choice'
           ? choiceOptions(verb, asked, pool, rand)

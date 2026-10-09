@@ -22,7 +22,7 @@ const modes: { id: QuizMode; icon: string; title: string; text: string }[] = [
     id: 'two',
     icon: '🎲',
     title: 'Ikkitasini yoz',
-    text: "V1, V2 yoki V3 dan bittasi tasodifiy beriladi — qolgan ikkitasini o'zingiz yozasiz.",
+    text: "V2 yoki V3 tasodifiy beriladi — V1 va qolgan shaklni o'zingiz yozasiz.",
   },
   { id: 'translate', icon: '🌐', title: 'Tarjima', text: "O'zbekcha tarjima berilgan — inglizcha fe'lni toping." },
 ]
